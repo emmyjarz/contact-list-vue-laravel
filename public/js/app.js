@@ -1936,22 +1936,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1963,7 +1947,12 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       contacts: [],
-      pagination: {}
+      contactData: {
+        contact: {},
+        errors: {}
+      },
+      pagination: {},
+      edit: false
     };
   },
   methods: {
@@ -1990,8 +1979,33 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.pagination = pagination;
     },
-    deleteContact: function deleteContact(id) {
+    addContact: function addContact(newContact) {
       var _this2 = this;
+
+      if (this.edit === false) {
+        console.log("call"); //Add
+
+        fetch("api/contacts", {
+          method: "post",
+          body: JSON.stringify(newContact),
+          headers: {
+            "content-type": "application/json"
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          console.log(res);
+
+          if (res.status !== "success") {
+            _this2.contactData.errors = res.error;
+            console.log(res.error.email[0]);
+          }
+        });
+      } else {//Update
+      }
+    },
+    deleteContact: function deleteContact(id) {
+      var _this3 = this;
 
       this.$swal.fire({
         title: "Are you sure?",
@@ -2008,8 +2022,10 @@ __webpack_require__.r(__webpack_exports__);
           }).then(function (res) {
             return res.json();
           }).then(function (res) {
-            if (res.status === "success") {
-              _this2.contacts = _this2.contacts.filter(function (each) {
+            if (res.status !== "success") {
+              _this3.fetchContacts();
+            } else {
+              _this3.contacts = _this3.contacts.filter(function (each) {
                 return each.id != id;
               });
             }
@@ -2053,44 +2069,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "AddContact",
+  props: ["contactData"],
   data: function data() {
     return {
-      name: "",
-      nameState: null
+      firstname: "",
+      lastname: "",
+      email: "",
+      errors: {} // contactData:{}
+
     };
   },
   methods: {
-    checkFormValidity: function checkFormValidity() {
-      var valid = this.$refs.form.checkValidity();
-      this.nameState = valid;
-      return valid;
-    },
-    resetModal: function resetModal() {
-      this.name = "";
-      this.nameState = null;
-    },
-    handleOk: function handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault(); // Trigger submit handler
-
-      this.handleSubmit();
-    },
-    handleSubmit: function handleSubmit() {
-      var _this = this;
-
-      // Exit when the form isn't valid
-      if (!this.checkFormValidity()) {
-        return;
-      } // Push the name to submitted names
-
-
-      this.submittedNames.push(this.name); // Hide the modal manually
-
-      this.$nextTick(function () {
-        _this.$bvModal.hide("modal-prevent-closing");
-      });
+    addContact: function addContact(e) {
+      e.preventDefault();
+      var newContact = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email
+      };
+      this.$emit("add-contact", newContact);
     }
+  },
+  created: function created() {//   this.contactData = contactData;
+    //   console.log('hello', this.contactData);
   }
 });
 
@@ -41569,26 +41610,10 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "nav",
-        { staticClass: "navbar navbar-expand-sm navbar-dark bg-info mb-2" },
-        [
-          _c(
-            "div",
-            { staticClass: "container" },
-            [
-              _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-                _vm._v("Contact List")
-              ]),
-              _vm._v(" "),
-              _c("AddContact")
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div"),
+      _c("AddContact", {
+        attrs: { contactData: _vm.contactData },
+        on: { "add-contact": _vm.addContact }
+      }),
       _vm._v(" "),
       _c("Contacts", {
         attrs: { contacts: _vm.contacts },
@@ -41674,29 +41699,175 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("b-icon-plus-circle", {
-        directives: [
-          {
-            name: "b-modal",
-            rawName: "v-b-modal.modal-prevent-closing",
-            modifiers: { "modal-prevent-closing": true }
-          }
-        ],
-        staticClass: "h1",
-        attrs: { variant: "light" }
-      }),
+  return _c("div", { staticClass: "card bg-light mb-3" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("h3", { staticClass: "text-primary mb-3 font-weight-bold" }, [
+        _vm._v("Contact")
+      ]),
       _vm._v(" "),
-      _c("b-modal", {
-        ref: "modal",
-        attrs: { id: "modal-prevent-closing", title: "Contact" },
-        on: { show: _vm.resetModal, hidden: _vm.resetModal, ok: _vm.handleOk }
-      })
-    ],
-    1
-  )
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addContact($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.firstname,
+                      expression: "firstname"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: [{ "is-invalid": _vm.contactData.errors.firstname }],
+                  attrs: {
+                    type: "text",
+                    name: "firstname",
+                    placeholder: "First Name"
+                  },
+                  domProps: { value: _vm.firstname },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.firstname = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.contactData.errors.firstname
+                  ? _c("small", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.contactData.errors.firstname[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: [{ "has-error": _vm.contactData.errors.lastname }]
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.lastname,
+                        expression: "lastname"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: [{ "is-invalid": _vm.contactData.errors.lastname }],
+                    attrs: {
+                      type: "text",
+                      name: "lastname",
+                      placeholder: "Last Name"
+                    },
+                    domProps: { value: _vm.lastname },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.lastname = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.contactData.errors.lastname
+                    ? _c("small", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.contactData.errors.lastname[0]))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: [{ "has-error": _vm.contactData.errors.email }]
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: [{ "is-invalid": _vm.contactData.errors.email }],
+                    attrs: {
+                      type: "text",
+                      name: "email",
+                      placeholder: "Email"
+                    },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.email = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.contactData.errors.email
+                    ? _c("small", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.contactData.errors.email[0]))
+                      ])
+                    : _vm._e()
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "float-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearForm()
+                  }
+                }
+              },
+              [_vm._v("Cancel")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Save")]
+            )
+          ])
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54436,8 +54607,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/emmyjarz/Desktop/learn_vue/contact-list-vue-laravel/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/emmyjarz/Desktop/learn_vue/contact-list-vue-laravel/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/emmyjarz/code/github/contact-list-vue-laravel/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/emmyjarz/code/github/contact-list-vue-laravel/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

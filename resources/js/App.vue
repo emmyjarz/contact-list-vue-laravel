@@ -1,22 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-info mb-2">
-      <div class="container">
-        <a href="#" class="navbar-brand">Contact List</a>
-        <!-- <a href title="Add Contact" class="btn btn-info float-right">
-          <i class="fas fa-plus fa-2x"></i>
-        </a> -->
-        <AddContact />
-      </div>
-    </nav>
-    <div>
-      <!-- As a link -->
-      <!-- <b-navbar variant="info" type="light">
-    <b-navbar-brand href="#">BootstrapVue</b-navbar-brand>
-    <b-navbar-brand href="#" right>BootstrapVue</b-navbar-brand>
-      </b-navbar>-->
-    </div>
-
+    <AddContact v-bind:contactData="contactData" v-on:add-contact="addContact" />
     <Contacts v-bind:contacts="contacts" v-on:del-contact="deleteContact" />
 
     <div class="btn-group" role="group" aria-label="Page navigation">
@@ -52,7 +36,12 @@ export default {
   data() {
     return {
       contacts: [],
-      pagination: {}
+      contactData: {
+        contact: {},
+        errors: {}
+      },
+      pagination: {},
+      edit: false
     };
   },
   methods: {
@@ -75,6 +64,29 @@ export default {
       };
       this.pagination = pagination;
     },
+    addContact(newContact) {
+      if (this.edit === false) {
+        console.log("call");
+        //Add
+        fetch("api/contacts", {
+          method: "post",
+          body: JSON.stringify(newContact),
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(res => {
+            console.log(res);
+            if (res.status !== "success") {
+              this.contactData.errors = res.error;
+              console.log(res.error.email[0])
+            }
+          });
+      } else {
+        //Update
+      }
+    },
     deleteContact(id) {
       this.$swal
         .fire({
@@ -93,7 +105,9 @@ export default {
             })
               .then(res => res.json())
               .then(res => {
-                if (res.status === "success") {
+                if (res.status !== "success") {
+                  this.fetchContacts();
+                } else {
                   this.contacts = this.contacts.filter(each => each.id != id);
                 }
               })
