@@ -6,11 +6,11 @@
 
 require('./bootstrap');
 
-
 window.Vue = require('vue');
 
 import "bootstrap/dist/css/bootstrap.css";
 
+// VueSweetalert2
 import VueSweetalert2 from "vue-sweetalert2";
 Vue.use(VueSweetalert2);
 

@@ -46,10 +46,10 @@ export default {
       contacts: [],
       contactData: {
         contact: {},
-        errors: {}
+        errors: {},
+        edit: false
       },
-      pagination: {},
-      edit: false
+      pagination: {}
     };
   },
   methods: {
@@ -64,7 +64,7 @@ export default {
         .catch(err => console.log(err));
     },
     addContact(contact) {
-      if (this.edit === false) {
+      if (this.contactData.edit === false) {
         //Add
         fetch("api/contacts", {
           method: "post",
@@ -82,7 +82,7 @@ export default {
               this.fetchContacts();
               this.afterActionMsg("Contact Added");
             }
-          });
+          }).catch(err => console.log(err));
       } else {
         //Update
         fetch(`api/contacts/${contact.id}`, {
@@ -95,18 +95,18 @@ export default {
           .then(res => res.json())
           .then(res => {
             if (res.status !== "success") {
-              console.log(res.error);
+                console.log(res.error);
               this.contactData.errors = res.error;
             } else {
               this.clearForm();
               this.fetchContacts();
               this.afterActionMsg("Contact Updated");
             }
-          });
+          }).catch(err => console.log(err));
       }
     },
     editContact(contact) {
-      this.edit = true;
+      this.contactData.edit = true;
       this.contactData.contact = contact;
     },
     deleteContact(id) {
@@ -129,7 +129,7 @@ export default {
               .then(res => {
                 if (res.status !== "success") {
                   this.fetchContacts();
-                  this.afterActionMsg("Cannot Delete Contact", 'error');
+                  this.afterActionMsg("Cannot Delete Contact", "error");
                 } else {
                   this.contacts = this.contacts.filter(each => each.id != id);
                   this.afterActionMsg("Contact Delete");
@@ -151,7 +151,7 @@ export default {
     clearForm() {
       this.contactData.contact = {};
       this.contactData.errors = {};
-      this.edit = false;
+      this.contactData.edit = false;
     },
     afterActionMsg(msg = "", icon = "success") {
       this.$swal.fire({
@@ -171,5 +171,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

@@ -18,14 +18,7 @@ class ContactController extends Controller
     public function index()
     {
         try {
-
             $contacts = Contact::orderBy('created_at', 'desc')->paginate(5);
-
-            foreach ($contacts as $contact) {
-                if (!empty($contact->phone)) {
-                    $contact->phone = Contact::phoneFormat($contact->phone);
-                }
-            }
 
             return ContactResource::collection($contacts);
         } catch (\Exception $e) {
@@ -35,7 +28,6 @@ class ContactController extends Controller
             ];
         }
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,9 +41,6 @@ class ContactController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|email|unique:contacts',
-            'phone' => 'digits:10|nullable',
-            'address1' => 'required_with:zip',
-            'zip' => 'required_with:address1|digits:5|nullable',
         ]);
         if ($validator->fails()) {
             return [
@@ -80,7 +69,6 @@ class ContactController extends Controller
             'status' => 'success'
         ];
     }
-
     /**
      * Update the specified resource in storage.
      *

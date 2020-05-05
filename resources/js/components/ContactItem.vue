@@ -8,11 +8,11 @@
                     <b>Email: </b><span>{{contact.email}}</span>
                 </div>
                 <div class="col">
-                    <b>Phone: </b><span v-if="contact.phone">{{contact.phone}}</span><span v-else>N/A</span>
+                    <b>Phone: </b><span v-if="contact.phone">({{contact.phone.slice(0,3)}}) {{contact.phone.slice(3, 6)}}-{{contact.phone.slice(6,10)}}</span><span v-else>N/A</span>
                 </div>
             </div>
             <div><b>Birthday: </b><span v-if="contact.birthday">{{contact.birthday}}</span><span v-else>N/A</span></div>
-            <div><b>Address: </b><span v-if="contact.address">{{contact.address.address1}} {{contact.address.address2}} {{contact.address.city}}, {{contact.address.state}} {{contact.address.zip}}</span><span v-else>N/A</span></div>
+            <div><b>Address: </b><span v-if="contact.address1">{{contact.address1}} {{contact.address2}} {{contact.city}}, {{contact.state}} {{contact.zip}}</span><span v-else>N/A</span></div>
         </div>
         <div class="float-right btn-group btn-group-sm">
           <button @click="$emit('edit-contact', contact)" class="btn btn-primary">Edit</button>

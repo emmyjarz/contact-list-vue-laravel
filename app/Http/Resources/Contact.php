@@ -22,7 +22,11 @@ class Contact extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'birthday' => $this->birthday,
-            'address' => $this->address,
+            'address1' => $this->address->address1 ?? null,
+            'address2' => $this->address->address2 ?? null,
+            'city' => $this->address->city ?? null,
+            'state' => $this->address->state ?? null,
+            'zip' => $this->address->zip ?? null,
         ];
     }
 }
