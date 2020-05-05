@@ -3,6 +3,7 @@
 Web Application to maintain a list of contacts which integrates with the google map api in order to show the location of each contact.  The page allows for pagaination and the functions to, search, sort by first name, last name, email address, phone number and a popup modal to confirm before removing contact.
 
 ### Prerequisites
+- [Node.js](https://nodejs.org)
 - [PHP](http://php.net/manual/en/install.php)
 - [Laravel](https://laravel.com/docs/5.7)
 
