@@ -1,7 +1,15 @@
 <template>
   <div>
-    <AddContact v-bind:contactData="contactData" v-on:add-contact="addContact" />
-    <Contacts v-bind:contacts="contacts" v-on:del-contact="deleteContact" />
+    <AddContact
+      v-bind:contactData="contactData"
+      v-on:add-contact="addContact"
+      v-on:clear-form="clearForm"
+    />
+    <Contacts
+      v-bind:contacts="contacts"
+      v-on:del-contact="deleteContact"
+      v-on:edit-contact="editContact"
+    />
 
     <div class="btn-group" role="group" aria-label="Page navigation">
       <button
@@ -55,37 +63,51 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    makePagination(meta, links) {
-      let pagination = {
-        currentPage: meta.current_page,
-        lastPage: meta.last_page,
-        nextPageUrl: links.next,
-        prevPageUrl: links.prev
-      };
-      this.pagination = pagination;
-    },
-    addContact(newContact) {
+    addContact(contact) {
       if (this.edit === false) {
-        console.log("call");
         //Add
         fetch("api/contacts", {
           method: "post",
-          body: JSON.stringify(newContact),
+          body: JSON.stringify(contact),
           headers: {
             "content-type": "application/json"
           }
         })
           .then(res => res.json())
           .then(res => {
-            console.log(res);
             if (res.status !== "success") {
               this.contactData.errors = res.error;
-              console.log(res.error.email[0])
+            } else {
+              this.clearForm();
+              this.fetchContacts();
+              this.afterActionMsg("Contact Added");
             }
           });
       } else {
         //Update
+        fetch(`api/contacts/${contact.id}`, {
+          method: "put",
+          body: JSON.stringify(contact),
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res.status !== "success") {
+              console.log(res.error);
+              this.contactData.errors = res.error;
+            } else {
+              this.clearForm();
+              this.fetchContacts();
+              this.afterActionMsg("Contact Updated");
+            }
+          });
       }
+    },
+    editContact(contact) {
+      this.edit = true;
+      this.contactData.contact = contact;
     },
     deleteContact(id) {
       this.$swal
@@ -107,13 +129,39 @@ export default {
               .then(res => {
                 if (res.status !== "success") {
                   this.fetchContacts();
+                  this.afterActionMsg("Cannot Delete Contact", 'error');
                 } else {
                   this.contacts = this.contacts.filter(each => each.id != id);
+                  this.afterActionMsg("Contact Delete");
                 }
               })
               .catch(err => console.log(err));
           }
         });
+    },
+    makePagination(meta, links) {
+      let pagination = {
+        currentPage: meta.current_page,
+        lastPage: meta.last_page,
+        nextPageUrl: links.next,
+        prevPageUrl: links.prev
+      };
+      this.pagination = pagination;
+    },
+    clearForm() {
+      this.contactData.contact = {};
+      this.contactData.errors = {};
+      this.edit = false;
+    },
+    afterActionMsg(msg = "", icon = "success") {
+      this.$swal.fire({
+        position: "top-end",
+        icon: icon,
+        width: "300px",
+        title: msg,
+        showConfirmButton: false,
+        timer: 1000
+      });
     }
   },
   created() {
@@ -122,5 +170,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.swal-wide {
+  width: 100px !important;
+}
 </style>

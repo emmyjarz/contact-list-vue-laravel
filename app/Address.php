@@ -16,8 +16,4 @@ class Address extends Model
         'state',
         'zip'
     ];
-    public static function prepAddress($address)
-    {
-        return $address->address1 . " " . $address->address2 . ", " . $address->city . ", " . $address->state . " " . $address->zip;
-    }
 }

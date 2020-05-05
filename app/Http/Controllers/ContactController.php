@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
-use App\Address;
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Resources\Contact as ContactResource;
 
 class ContactController extends Controller
@@ -19,11 +19,9 @@ class ContactController extends Controller
     {
         try {
 
-            $contacts = Contact::paginate(5);
+            $contacts = Contact::orderBy('created_at', 'desc')->paginate(5);
 
             foreach ($contacts as $contact) {
-                $address = $contact->address;
-                $contact->address = !empty($address) ? Address::prepAddress($contact->address) : null;
                 if (!empty($contact->phone)) {
                     $contact->phone = Contact::phoneFormat($contact->phone);
                 }
@@ -56,7 +54,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //Validation
+        //Validation 
         $validator = Validator::make($request->all(), [
             'firstname' => 'required',
             'lastname' => 'required',
@@ -71,7 +69,6 @@ class ContactController extends Controller
                 'status' => 'error',
             ];
         }
-
         $post = $request->all();
 
         try {
@@ -89,15 +86,7 @@ class ContactController extends Controller
             ];
         }
 
-        //Make phone number pretty
-        if (!empty($contact->phone)) {
-            $contact->phone = Contact::phoneFormat($contact->phone);
-        }
-
         return [
-            'data' => [
-                'contact' => $contact,
-            ],
             'status' => 'success'
         ];
     }
@@ -108,38 +97,38 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $contact)
-    {
-        try {
-            //Make phone number pretty
-            if (!empty($contact->phone)) {
-                $contact->phone = Contact::phoneFormat($contact->phone);
-            }
-            return [
-                'data' => [
-                    'contact' => $contact,
-                    'address' => $contact->address ?? null
-                ],
-                'status' => 'success'
-            ];
-        } catch (\Exception $e) {
-            return [
-                'error' => $e->getMessage(),
-                'status' => 'error'
-            ];
-        }
-    }
+    // public function show(Contact $contact)
+    // {
+    //     try {
+    //         //Make phone number pretty
+    //         if (!empty($contact->phone)) {
+    //             $contact->phone = Contact::phoneFormat($contact->phone);
+    //         }
+    //         return [
+    //             'data' => [
+    //                 'contact' => $contact,
+    //                 'address' => $contact->address ?? null
+    //             ],
+    //             'status' => 'success'
+    //         ];
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'error' => $e->getMessage(),
+    //             'status' => 'error'
+    //         ];
+    //     }
+    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit($id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -148,9 +137,54 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Contact $contact)
     {
-        //
+        //Validation
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'phone' => 'digits:10|nullable',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('contacts')->ignore($contact->id),
+                ],
+                'address1' => 'required_with:zip',
+                'zip' => 'required_with:address1|digits:5|nullable',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return [
+                'error' => $validator->errors(),
+                'status' => 'error',
+            ];
+        }
+
+        $post = $request->all();
+
+        try {
+            //Update Contact
+            $contact->update($post);
+
+            $address = $contact->address;
+
+            //Create or Update address
+            if (!empty($post['address1']) && !empty($post['zip'])) {
+                empty($address) ?  $contact->address()->create($post) : $address->update($post);
+            }
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage(),
+                'status' => 'error'
+            ];
+        }
+
+        return [
+            'status' => 'success'
+        ];
     }
 
     /**

@@ -17,7 +17,8 @@ class Contact extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'name' => ucwords($this->firstname) . " " . ucwords($this->lastname),
+            'firstname' => ucwords($this->firstname),
+            'lastname' =>  ucwords($this->lastname),
             'email' => $this->email,
             'phone' => $this->phone,
             'birthday' => $this->birthday,
