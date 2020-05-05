@@ -14,11 +14,7 @@
                 placeholder="First Name"
                 v-bind:class="[{'is-invalid': contactData.errors.firstname}]"
               />
-              <small
-                v-if="contactData.errors.firstname"
-                class="text-danger"
-              >{{contactData.errors.firstname[0]}}</small>
-              <small v-else class="text-danger"></small>
+              <ErrorMsg v-bind:eachError="contactData.errors.firstname" />
             </div>
           </div>
           <div class="col">
@@ -31,11 +27,7 @@
                 placeholder="Last Name"
                 v-bind:class="[{'is-invalid': contactData.errors.lastname}]"
               />
-              <small
-                v-if="contactData.errors.lastname"
-                class="text-danger"
-              >{{contactData.errors.lastname[0]}}</small>
-              <small v-else class="text-danger"></small>
+                <ErrorMsg v-bind:eachError="contactData.errors.lastname" />
             </div>
           </div>
           <div class="col">
@@ -48,11 +40,7 @@
                 placeholder="Email"
                 v-bind:class="[{'is-invalid': contactData.errors.email}]"
               />
-              <small
-                v-if="contactData.errors.email"
-                class="text-danger"
-              >{{contactData.errors.email[0]}}</small>
-              <small v-else class="text-danger"></small>
+                <ErrorMsg v-bind:eachError="contactData.errors.email" />
             </div>
           </div>
         </div>
@@ -66,14 +54,23 @@
 </template>
 
 <script>
+import ErrorMsg from "./ErrorMsg";
 export default {
   name: "AddContact",
+  components: {
+    ErrorMsg
+  },
+  data() {
+    return {
+      eachError: {}
+    };
+  },
   props: ["contactData"],
   methods: {
     addContact(e) {
       e.preventDefault();
       const { firstname, lastname, email, id } = this.contactData.contact;
-      const contact= {
+      const contact = {
         id,
         firstname,
         lastname,
