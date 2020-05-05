@@ -171,7 +171,5 @@ export default {
 </script>
 
 <style scoped>
-.swal-wide {
-  width: 100px !important;
-}
+
 </style>

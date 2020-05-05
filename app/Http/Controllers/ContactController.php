@@ -37,16 +37,6 @@ class ContactController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -90,45 +80,6 @@ class ContactController extends Controller
             'status' => 'success'
         ];
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function show(Contact $contact)
-    // {
-    //     try {
-    //         //Make phone number pretty
-    //         if (!empty($contact->phone)) {
-    //             $contact->phone = Contact::phoneFormat($contact->phone);
-    //         }
-    //         return [
-    //             'data' => [
-    //                 'contact' => $contact,
-    //                 'address' => $contact->address ?? null
-    //             ],
-    //             'status' => 'success'
-    //         ];
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'error' => $e->getMessage(),
-    //             'status' => 'error'
-    //         ];
-    //     }
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
 
     /**
      * Update the specified resource in storage.
