@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <hr>
+          <hr />
           <div class="row">
             <div class="col">
               <div class="form-group">
@@ -136,13 +136,11 @@
                 <ErrorMsg v-bind:eachError="contactData.errors.zip" />
               </div>
             </div>
-            <div class="col">
-              <div class="float-right">
-                <button @click="$emit('clear-form')" type="button" class="btn btn-secondary">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-              </div>
-            </div>
           </div>
+        </div>
+        <div class="float-right">
+          <button @click="$emit('clear-form')" type="button" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
@@ -165,14 +163,25 @@ export default {
   methods: {
     addContact(e) {
       e.preventDefault();
-      let { firstname, lastname, email, id, phone, address1, address2, city, state, zip } = this.contactData.contact;
+      let {
+        firstname,
+        lastname,
+        email,
+        id,
+        phone,
+        address1,
+        address2,
+        city,
+        state,
+        zip
+      } = this.contactData.contact;
       const contact = {
         id,
         firstname,
         lastname,
         email,
-        phone, 
-        address1, 
+        phone,
+        address1,
         address2,
         city,
         state,
