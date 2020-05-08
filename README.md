@@ -1,6 +1,6 @@
 # Contact List
 
-Web Application to maintain a list of contacts which integrates with the google map api in order to show the location of each contact.  The page allows for pagaination and the functions to, search, sort by first name, last name, email address, phone number and a popup modal to confirm before removing contact.
+Web Application to maintain a list of contacts, the page allows for pagaination and a popup modal to confirm before removing contact and confirm after adding and updating contact.
 
 ### Prerequisites
 - [Node.js](https://nodejs.org)
