@@ -162,7 +162,6 @@ export default {
   props: ["contactData"],
   methods: {
     addContact(e) {
-      e.preventDefault();
       let {
         firstname,
         lastname,
