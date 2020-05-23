@@ -2275,7 +2275,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ["contactData"],
   methods: {
-    addContact: function addContact(e) {
+    addContact: function addContact() {
       var _this$contactData$con = this.contactData.contact,
           firstname = _this$contactData$con.firstname,
           lastname = _this$contactData$con.lastname,
