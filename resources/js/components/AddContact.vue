@@ -2,7 +2,7 @@
   <div class="card bg-secondary text-white mb-3">
     <div class="card-body">
       <h3 class="mb-3 font-weight-bold">Contact</h3>
-      <form @submit.prevent="addContact">
+      <form @submit.prevent="$emit('add-contact', contactData.contact)">
         <div class="row">
           <div class="col">
             <div class="form-group">
@@ -159,36 +159,7 @@ export default {
       eachError: {}
     };
   },
-  props: ["contactData"],
-  methods: {
-    addContact() {
-      let {
-        firstname,
-        lastname,
-        email,
-        id,
-        phone,
-        address1,
-        address2,
-        city,
-        state,
-        zip
-      } = this.contactData.contact;
-      const contact = {
-        id,
-        firstname,
-        lastname,
-        email,
-        phone,
-        address1,
-        address2,
-        city,
-        state,
-        zip
-      };
-      this.$emit("add-contact", contact);
-    }
-  }
+  props: ["contactData"]
 };
 </script>
 

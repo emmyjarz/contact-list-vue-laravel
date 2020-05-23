@@ -2273,35 +2273,7 @@ __webpack_require__.r(__webpack_exports__);
       eachError: {}
     };
   },
-  props: ["contactData"],
-  methods: {
-    addContact: function addContact() {
-      var _this$contactData$con = this.contactData.contact,
-          firstname = _this$contactData$con.firstname,
-          lastname = _this$contactData$con.lastname,
-          email = _this$contactData$con.email,
-          id = _this$contactData$con.id,
-          phone = _this$contactData$con.phone,
-          address1 = _this$contactData$con.address1,
-          address2 = _this$contactData$con.address2,
-          city = _this$contactData$con.city,
-          state = _this$contactData$con.state,
-          zip = _this$contactData$con.zip;
-      var contact = {
-        id: id,
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        phone: phone,
-        address1: address1,
-        address2: address2,
-        city: city,
-        state: state,
-        zip: zip
-      };
-      this.$emit("add-contact", contact);
-    }
-  }
+  props: ["contactData"]
 });
 
 /***/ }),
@@ -41904,7 +41876,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.addContact($event)
+              return _vm.$emit("add-contact", _vm.contactData.contact)
             }
           }
         },
