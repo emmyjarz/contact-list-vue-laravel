@@ -1,14 +1,13 @@
 <template>
-<div>
-  <small v-if="eachError" class="text-danger">{{eachError[0]}}</small>
-  <small v-else class="text-danger"></small>
-</div>
+  <div>
+    <small v-if="eachError" class="text-danger">{{eachError[0]}}</small>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "ErrorMsg",
-    props:['eachError']
+  name: "ErrorMsg",
+  props: ["eachError"]
 };
 </script>
 

@@ -2363,10 +2363,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ErrorMsg",
-  props: ['eachError']
+  props: ["eachError"]
 });
 
 /***/ }),
@@ -41942,7 +41941,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    class: [{ "is-invalid": _vm.contactData.errors.lastname }],
+                    class: { "is-invalid": _vm.contactData.errors.lastname },
                     attrs: {
                       type: "text",
                       name: "lastname",
@@ -41986,7 +41985,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    class: [{ "is-invalid": _vm.contactData.errors.email }],
+                    class: { "is-invalid": _vm.contactData.errors.email },
                     attrs: {
                       type: "text",
                       name: "email",
@@ -42045,7 +42044,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        class: [{ "is-invalid": _vm.contactData.errors.phone }],
+                        class: { "is-invalid": _vm.contactData.errors.phone },
                         attrs: {
                           type: "tel",
                           name: "phone",
@@ -42089,9 +42088,9 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        class: [
-                          { "is-invalid": _vm.contactData.errors.birthday }
-                        ],
+                        class: {
+                          "is-invalid": _vm.contactData.errors.birthday
+                        },
                         attrs: {
                           type: "date",
                           name: "birthday",
@@ -42139,9 +42138,9 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        class: [
-                          { "is-invalid": _vm.contactData.errors.address1 }
-                        ],
+                        class: {
+                          "is-invalid": _vm.contactData.errors.address1
+                        },
                         attrs: {
                           type: "text",
                           name: "address1",
@@ -42289,7 +42288,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        class: [{ "is-invalid": _vm.contactData.errors.zip }],
+                        class: { "is-invalid": _vm.contactData.errors.zip },
                         attrs: { type: "tel", name: "zip", placeholder: "Zip" },
                         domProps: { value: _vm.contactData.contact.zip },
                         on: {
@@ -42528,7 +42527,7 @@ var render = function() {
       ? _c("small", { staticClass: "text-danger" }, [
           _vm._v(_vm._s(_vm.eachError[0]))
         ])
-      : _c("small", { staticClass: "text-danger" })
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

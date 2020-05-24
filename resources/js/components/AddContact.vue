@@ -25,7 +25,7 @@
                 v-model="contactData.contact.lastname"
                 name="lastname"
                 placeholder="Last Name"
-                v-bind:class="[{'is-invalid': contactData.errors.lastname}]"
+                v-bind:class="{'is-invalid': contactData.errors.lastname}"
               />
               <ErrorMsg v-bind:eachError="contactData.errors.lastname" />
             </div>
@@ -38,7 +38,7 @@
                 v-model="contactData.contact.email"
                 name="email"
                 placeholder="Email"
-                v-bind:class="[{'is-invalid': contactData.errors.email}]"
+                v-bind:class="{'is-invalid': contactData.errors.email}"
               />
               <ErrorMsg v-bind:eachError="contactData.errors.email" />
             </div>
@@ -54,7 +54,7 @@
                   v-model="contactData.contact.phone"
                   name="phone"
                   placeholder="Phone"
-                  v-bind:class="[{'is-invalid': contactData.errors.phone}]"
+                  v-bind:class="{'is-invalid': contactData.errors.phone}"
                 />
                 <ErrorMsg v-bind:eachError="contactData.errors.phone" />
               </div>
@@ -67,7 +67,7 @@
                   v-model="contactData.contact.birthday"
                   name="birthday"
                   placeholder="birthday"
-                  v-bind:class="[{'is-invalid': contactData.errors.birthday}]"
+                  v-bind:class="{'is-invalid': contactData.errors.birthday}"
                 />
                 <ErrorMsg v-bind:eachError="contactData.errors.birthday" />
               </div>
@@ -83,7 +83,7 @@
                   v-model="contactData.contact.address1"
                   name="address1"
                   placeholder="Address 1"
-                  v-bind:class="[{'is-invalid': contactData.errors.address1}]"
+                  v-bind:class="{'is-invalid': contactData.errors.address1}"
                 />
                 <ErrorMsg v-bind:eachError="contactData.errors.address1" />
               </div>
@@ -131,7 +131,7 @@
                   v-model="contactData.contact.zip"
                   name="zip"
                   placeholder="Zip"
-                  v-bind:class="[{'is-invalid': contactData.errors.zip}]"
+                  v-bind:class="{'is-invalid': contactData.errors.zip}"
                 />
                 <ErrorMsg v-bind:eachError="contactData.errors.zip" />
               </div>
