@@ -2082,6 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
       this.contactData.contact = {};
       this.contactData.errors = {};
       this.contactData.edit = false;
+      this.fetchContacts();
     },
     afterActionMsg: function afterActionMsg() {
       var msg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
@@ -41897,7 +41898,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    class: [{ "is-invalid": _vm.contactData.errors.firstname }],
+                    class: { "is-invalid": _vm.contactData.errors.firstname },
                     attrs: {
                       type: "text",
                       name: "firstname",
@@ -41929,10 +41930,7 @@ var render = function() {
             _c("div", { staticClass: "col" }, [
               _c(
                 "div",
-                {
-                  staticClass: "form-group",
-                  class: [{ "has-error": _vm.contactData.errors.lastname }]
-                },
+                { staticClass: "form-group" },
                 [
                   _c("input", {
                     directives: [
@@ -41976,10 +41974,7 @@ var render = function() {
             _c("div", { staticClass: "col" }, [
               _c(
                 "div",
-                {
-                  staticClass: "form-group",
-                  class: [{ "has-error": _vm.contactData.errors.email }]
-                },
+                { staticClass: "form-group" },
                 [
                   _c("input", {
                     directives: [
@@ -42038,10 +42033,7 @@ var render = function() {
                 _c("div", { staticClass: "col" }, [
                   _c(
                     "div",
-                    {
-                      staticClass: "form-group",
-                      class: [{ "has-error": _vm.contactData.errors.phone }]
-                    },
+                    { staticClass: "form-group" },
                     [
                       _c("input", {
                         directives: [
@@ -42085,10 +42077,7 @@ var render = function() {
                 _c("div", { staticClass: "col" }, [
                   _c(
                     "div",
-                    {
-                      staticClass: "form-group",
-                      class: [{ "has-error": _vm.contactData.errors.birthday }]
-                    },
+                    { staticClass: "form-group" },
                     [
                       _c("input", {
                         directives: [
@@ -42288,10 +42277,7 @@ var render = function() {
                 _c("div", { staticClass: "col" }, [
                   _c(
                     "div",
-                    {
-                      staticClass: "form-group",
-                      class: [{ "has-error": _vm.contactData.errors.zip }]
-                    },
+                    { staticClass: "form-group" },
                     [
                       _c("input", {
                         directives: [

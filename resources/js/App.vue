@@ -82,7 +82,8 @@ export default {
               this.fetchContacts();
               this.afterActionMsg("Contact Added");
             }
-          }).catch(err => console.log(err));
+          })
+          .catch(err => console.log(err));
       } else {
         //Update
         fetch(`api/contacts/${contact.id}`, {
@@ -95,14 +96,15 @@ export default {
           .then(res => res.json())
           .then(res => {
             if (res.status !== "success") {
-                console.log(res.error);
+              console.log(res.error);
               this.contactData.errors = res.error;
             } else {
               this.clearForm();
               this.fetchContacts();
               this.afterActionMsg("Contact Updated");
             }
-          }).catch(err => console.log(err));
+          })
+          .catch(err => console.log(err));
       }
     },
     editContact(contact) {
@@ -152,6 +154,7 @@ export default {
       this.contactData.contact = {};
       this.contactData.errors = {};
       this.contactData.edit = false;
+      this.fetchContacts();
     },
     afterActionMsg(msg = "", icon = "success") {
       this.$swal.fire({

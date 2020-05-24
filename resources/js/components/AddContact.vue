@@ -12,13 +12,13 @@
                 v-model="contactData.contact.firstname"
                 name="firstname"
                 placeholder="First Name"
-                v-bind:class="[{'is-invalid': contactData.errors.firstname}]"
+                v-bind:class="{'is-invalid': contactData.errors.firstname}"
               />
               <ErrorMsg v-bind:eachError="contactData.errors.firstname" />
             </div>
           </div>
           <div class="col">
-            <div class="form-group" v-bind:class="[{'has-error': contactData.errors.lastname}]">
+            <div class="form-group">
               <input
                 type="text"
                 class="form-control"
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="col">
-            <div class="form-group" v-bind:class="[{'has-error': contactData.errors.email}]">
+            <div class="form-group">
               <input
                 type="text"
                 class="form-control"
@@ -47,7 +47,7 @@
         <div v-show="contactData.edit">
           <div class="row">
             <div class="col">
-              <div class="form-group" v-bind:class="[{'has-error': contactData.errors.phone}]">
+              <div class="form-group">
                 <input
                   type="tel"
                   class="form-control"
@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="form-group" v-bind:class="[{'has-error': contactData.errors.birthday}]">
+              <div class="form-group">
                 <input
                   type="date"
                   class="form-control"
@@ -124,7 +124,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="form-group" v-bind:class="[{'has-error': contactData.errors.zip}]">
+              <div class="form-group">
                 <input
                   type="tel"
                   class="form-control"
