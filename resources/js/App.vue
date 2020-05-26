@@ -1,7 +1,9 @@
 <template>
   <div>
     <AddContact
-      v-bind:contactData="contactData"
+      v-bind:contact="contactData.contact"
+      v-bind:errors="contactData.errors"
+      v-bind:edit="contactData.edit"
       v-on:add-contact="addContact"
       v-on:clear-form="clearForm"
     />
@@ -96,7 +98,6 @@ export default {
           .then(res => res.json())
           .then(res => {
             if (res.status !== "success") {
-              console.log(res.error);
               this.contactData.errors = res.error;
             } else {
               this.clearForm();

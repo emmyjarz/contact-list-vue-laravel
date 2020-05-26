@@ -1944,6 +1944,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2016,7 +2018,6 @@ __webpack_require__.r(__webpack_exports__);
           return res.json();
         }).then(function (res) {
           if (res.status !== "success") {
-            console.log(res.error);
             _this2.contactData.errors = res.error;
           } else {
             _this2.clearForm();
@@ -2274,7 +2275,7 @@ __webpack_require__.r(__webpack_exports__);
       eachError: {}
     };
   },
-  props: ["contactData"]
+  props: ["contact", "errors", "edit"]
 });
 
 /***/ }),
@@ -41775,7 +41776,11 @@ var render = function() {
     "div",
     [
       _c("AddContact", {
-        attrs: { contactData: _vm.contactData },
+        attrs: {
+          contact: _vm.contactData.contact,
+          errors: _vm.contactData.errors,
+          edit: _vm.contactData.edit
+        },
         on: { "add-contact": _vm.addContact, "clear-form": _vm.clearForm }
       }),
       _vm._v(" "),
@@ -41876,7 +41881,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.$emit("add-contact", _vm.contactData.contact)
+              return _vm.$emit("add-contact", _vm.contact)
             }
           }
         },
@@ -41892,35 +41897,29 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.contactData.contact.firstname,
-                        expression: "contactData.contact.firstname"
+                        value: _vm.contact.firstname,
+                        expression: "contact.firstname"
                       }
                     ],
                     staticClass: "form-control",
-                    class: { "is-invalid": _vm.contactData.errors.firstname },
+                    class: { "is-invalid": _vm.errors.firstname },
                     attrs: {
                       type: "text",
                       name: "firstname",
                       placeholder: "First Name"
                     },
-                    domProps: { value: _vm.contactData.contact.firstname },
+                    domProps: { value: _vm.contact.firstname },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(
-                          _vm.contactData.contact,
-                          "firstname",
-                          $event.target.value
-                        )
+                        _vm.$set(_vm.contact, "firstname", $event.target.value)
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("ErrorMsg", {
-                    attrs: { eachError: _vm.contactData.errors.firstname }
-                  })
+                  _c("ErrorMsg", { attrs: { eachError: _vm.errors.firstname } })
                 ],
                 1
               )
@@ -41936,35 +41935,29 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.contactData.contact.lastname,
-                        expression: "contactData.contact.lastname"
+                        value: _vm.contact.lastname,
+                        expression: "contact.lastname"
                       }
                     ],
                     staticClass: "form-control",
-                    class: { "is-invalid": _vm.contactData.errors.lastname },
+                    class: { "is-invalid": _vm.errors.lastname },
                     attrs: {
                       type: "text",
                       name: "lastname",
                       placeholder: "Last Name"
                     },
-                    domProps: { value: _vm.contactData.contact.lastname },
+                    domProps: { value: _vm.contact.lastname },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(
-                          _vm.contactData.contact,
-                          "lastname",
-                          $event.target.value
-                        )
+                        _vm.$set(_vm.contact, "lastname", $event.target.value)
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("ErrorMsg", {
-                    attrs: { eachError: _vm.contactData.errors.lastname }
-                  })
+                  _c("ErrorMsg", { attrs: { eachError: _vm.errors.lastname } })
                 ],
                 1
               )
@@ -41980,35 +41973,29 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.contactData.contact.email,
-                        expression: "contactData.contact.email"
+                        value: _vm.contact.email,
+                        expression: "contact.email"
                       }
                     ],
                     staticClass: "form-control",
-                    class: { "is-invalid": _vm.contactData.errors.email },
+                    class: { "is-invalid": _vm.errors.email },
                     attrs: {
                       type: "text",
                       name: "email",
                       placeholder: "Email"
                     },
-                    domProps: { value: _vm.contactData.contact.email },
+                    domProps: { value: _vm.contact.email },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(
-                          _vm.contactData.contact,
-                          "email",
-                          $event.target.value
-                        )
+                        _vm.$set(_vm.contact, "email", $event.target.value)
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("ErrorMsg", {
-                    attrs: { eachError: _vm.contactData.errors.email }
-                  })
+                  _c("ErrorMsg", { attrs: { eachError: _vm.errors.email } })
                 ],
                 1
               )
@@ -42022,8 +42009,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.contactData.edit,
-                  expression: "contactData.edit"
+                  value: _vm.edit,
+                  expression: "edit"
                 }
               ]
             },
@@ -42039,35 +42026,29 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.contactData.contact.phone,
-                            expression: "contactData.contact.phone"
+                            value: _vm.contact.phone,
+                            expression: "contact.phone"
                           }
                         ],
                         staticClass: "form-control",
-                        class: { "is-invalid": _vm.contactData.errors.phone },
+                        class: { "is-invalid": _vm.errors.phone },
                         attrs: {
                           type: "tel",
                           name: "phone",
                           placeholder: "Phone"
                         },
-                        domProps: { value: _vm.contactData.contact.phone },
+                        domProps: { value: _vm.contact.phone },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(
-                              _vm.contactData.contact,
-                              "phone",
-                              $event.target.value
-                            )
+                            _vm.$set(_vm.contact, "phone", $event.target.value)
                           }
                         }
                       }),
                       _vm._v(" "),
-                      _c("ErrorMsg", {
-                        attrs: { eachError: _vm.contactData.errors.phone }
-                      })
+                      _c("ErrorMsg", { attrs: { eachError: _vm.errors.phone } })
                     ],
                     1
                   )
@@ -42083,27 +42064,25 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.contactData.contact.birthday,
-                            expression: "contactData.contact.birthday"
+                            value: _vm.contact.birthday,
+                            expression: "contact.birthday"
                           }
                         ],
                         staticClass: "form-control",
-                        class: {
-                          "is-invalid": _vm.contactData.errors.birthday
-                        },
+                        class: { "is-invalid": _vm.errors.birthday },
                         attrs: {
                           type: "date",
                           name: "birthday",
                           placeholder: "birthday"
                         },
-                        domProps: { value: _vm.contactData.contact.birthday },
+                        domProps: { value: _vm.contact.birthday },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.contactData.contact,
+                              _vm.contact,
                               "birthday",
                               $event.target.value
                             )
@@ -42112,7 +42091,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("ErrorMsg", {
-                        attrs: { eachError: _vm.contactData.errors.birthday }
+                        attrs: { eachError: _vm.errors.birthday }
                       })
                     ],
                     1
@@ -42133,27 +42112,25 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.contactData.contact.address1,
-                            expression: "contactData.contact.address1"
+                            value: _vm.contact.address1,
+                            expression: "contact.address1"
                           }
                         ],
                         staticClass: "form-control",
-                        class: {
-                          "is-invalid": _vm.contactData.errors.address1
-                        },
+                        class: { "is-invalid": _vm.errors.address1 },
                         attrs: {
                           type: "text",
                           name: "address1",
                           placeholder: "Address 1"
                         },
-                        domProps: { value: _vm.contactData.contact.address1 },
+                        domProps: { value: _vm.contact.address1 },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.contactData.contact,
+                              _vm.contact,
                               "address1",
                               $event.target.value
                             )
@@ -42162,7 +42139,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("ErrorMsg", {
-                        attrs: { eachError: _vm.contactData.errors.address1 }
+                        attrs: { eachError: _vm.errors.address1 }
                       })
                     ],
                     1
@@ -42176,8 +42153,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.contactData.contact.address2,
-                          expression: "contactData.contact.address2"
+                          value: _vm.contact.address2,
+                          expression: "contact.address2"
                         }
                       ],
                       staticClass: "form-control",
@@ -42186,17 +42163,13 @@ var render = function() {
                         name: "address2",
                         placeholder: "Apartment, studio, or floor"
                       },
-                      domProps: { value: _vm.contactData.contact.address2 },
+                      domProps: { value: _vm.contact.address2 },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.contactData.contact,
-                            "address2",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.contact, "address2", $event.target.value)
                         }
                       }
                     })
@@ -42210,8 +42183,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.contactData.contact.city,
-                          expression: "contactData.contact.city"
+                          value: _vm.contact.city,
+                          expression: "contact.city"
                         }
                       ],
                       staticClass: "form-control",
@@ -42220,17 +42193,13 @@ var render = function() {
                         name: "city",
                         placeholder: "City"
                       },
-                      domProps: { value: _vm.contactData.contact.city },
+                      domProps: { value: _vm.contact.city },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.contactData.contact,
-                            "city",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.contact, "city", $event.target.value)
                         }
                       }
                     })
@@ -42246,8 +42215,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.contactData.contact.state,
-                          expression: "contactData.contact.state"
+                          value: _vm.contact.state,
+                          expression: "contact.state"
                         }
                       ],
                       staticClass: "form-control",
@@ -42256,17 +42225,13 @@ var render = function() {
                         name: "state",
                         placeholder: "State"
                       },
-                      domProps: { value: _vm.contactData.contact.state },
+                      domProps: { value: _vm.contact.state },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.contactData.contact,
-                            "state",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.contact, "state", $event.target.value)
                         }
                       }
                     })
@@ -42283,31 +42248,25 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.contactData.contact.zip,
-                            expression: "contactData.contact.zip"
+                            value: _vm.contact.zip,
+                            expression: "contact.zip"
                           }
                         ],
                         staticClass: "form-control",
-                        class: { "is-invalid": _vm.contactData.errors.zip },
+                        class: { "is-invalid": _vm.errors.zip },
                         attrs: { type: "tel", name: "zip", placeholder: "Zip" },
-                        domProps: { value: _vm.contactData.contact.zip },
+                        domProps: { value: _vm.contact.zip },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(
-                              _vm.contactData.contact,
-                              "zip",
-                              $event.target.value
-                            )
+                            _vm.$set(_vm.contact, "zip", $event.target.value)
                           }
                         }
                       }),
                       _vm._v(" "),
-                      _c("ErrorMsg", {
-                        attrs: { eachError: _vm.contactData.errors.zip }
-                      })
+                      _c("ErrorMsg", { attrs: { eachError: _vm.errors.zip } })
                     ],
                     1
                   )
