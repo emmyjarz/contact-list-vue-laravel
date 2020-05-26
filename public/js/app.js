@@ -2270,12 +2270,23 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     ErrorMsg: _ErrorMsg__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: {
+    contact: {
+      type: Object
+    },
+    errors: {
+      type: Object
+    },
+    edit: {
+      type: Boolean,
+      required: true
+    }
+  },
   data: function data() {
     return {
       eachError: {}
     };
-  },
-  props: ["contact", "errors", "edit"]
+  }
 });
 
 /***/ }),
@@ -2338,13 +2349,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Contacts",
   components: {
     ContactItem: _ContactItem_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["contacts"]
+  props: {
+    contacts: Array
+  }
 });
 
 /***/ }),
@@ -2366,7 +2383,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ErrorMsg",
-  props: ["eachError"]
+  props: {
+    eachError: Array
+  }
 });
 
 /***/ }),

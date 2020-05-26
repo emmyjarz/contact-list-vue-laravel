@@ -154,12 +154,23 @@ export default {
   components: {
     ErrorMsg
   },
+  props: {
+    contact: {
+      type: Object
+    },
+    errors: {
+      type: Object
+    },
+    edit: {
+      type: Boolean,
+      required: true
+    }
+  },
   data() {
     return {
       eachError: {}
     };
-  },
-  props: ["contact", "errors", "edit"]
+  }
 };
 </script>
 

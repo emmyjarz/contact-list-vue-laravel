@@ -7,7 +7,9 @@
 <script>
 export default {
   name: "ErrorMsg",
-  props: ["eachError"]
+  props: {
+    eachError: Array
+  }
 };
 </script>
 
