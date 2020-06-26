@@ -4,33 +4,55 @@ const state = {
     contacts: [],
     pagination: {},
     eachContact: {},
-    errors: {}
+    formErrors: {},
+    systemErrors: ""
 };
 
 const getters = {
     allContacts: state => state.contacts,
     pagination: state => state.pagination,
     eachContact: state => state.eachContact,
-    errors: state => state.errors
+    formErrors: state => state.formErrors,
+    systemErrors: state => state.systemErrors
 };
 
 const actions = {
     async fetchContacts({ commit }, pageUrl) {
-        pageUrl = pageUrl || "api/contacts";
-        const response = await axios.get(pageUrl);
-        commit("setContacts", response.data);
-    },
-    async addContact({ commit }, contact) {
-        const response = await axios.post("api/contacts", contact);
-        if (response.data.status !== "success") {
-            commit("setErrors", response.data.error);
-        } else {
-            commit("newContact", contact);
-            commit("clearForm");
+        try {
+            pageUrl = pageUrl || "api/contacts";
+            const response = await axios.get(pageUrl);
+            commit("setContacts", response.data);
+        } catch (err) {
+            commit("setSystemErrors", err);
         }
     },
-    resetForm({ commit }) {
-        commit("clearForm");
+    async addContact({ commit }, contact) {
+        try {
+            const response = await axios.post("api/contacts", contact);
+            if (response.data.status !== "success") {
+                commit("setFormErrors", response.data.error);
+            } else {
+                commit("newContact", contact);
+                commit("clearForm");
+            }
+        } catch (err) {
+            commit("setSystemErrors", err);
+        }
+    },
+    async deleteContact({ commit }, contactId) {
+        try {
+            const response = await axios.delete(`api/contacts/${contactId}`);
+            if (response.data.status !== "success") {
+                commit("setSystemErrors", response.data.error);
+            } else {
+                commit("setDeleteContact", contactId);
+            }
+        } catch (err) {
+            commit("setSystemErrors", err.message);
+        }
+    },
+    clearForm({ commit }) {
+        commit("setClearForm");
     }
 };
 const mutations = {
@@ -44,15 +66,17 @@ const mutations = {
         state.pagination = pages;
         state.contacts = contacts.data;
     },
-    setErrors: (state, errors) => {
-        state.errors = errors;
+    newContact: (state, contact) => state.contacts.unshift(contact),
+    setDeleteContact: (state, contactId) => {
+        state.contacts = state.contacts.filter(
+            contact => contactId !== contact.id
+        );
     },
-    newContact: (state, contact) => {
-        state.contacts.unshift(contact);
-    },
-    clearForm: state => {
+    setFormErrors: (state, errors) => (state.formErrors = errors),
+    setSystemErrors: (state, errors) => (state.systemErrors = errors),
+    setClearForm: state => {
         state.eachContact = {};
-        state.errors = {};
+        state.formErrors = {};
     }
 };
 

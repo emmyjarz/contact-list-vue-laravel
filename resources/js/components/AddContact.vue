@@ -12,12 +12,12 @@
                                 v-model="eachContact.firstname"
                                 name="firstname"
                                 placeholder="First Name"
-                                v-bind:class="{'is-invalid': errors.firstname}"
+                                v-bind:class="{'is-invalid': formErrors.firstname}"
                             />
                             <small
-                                v-if="errors.firstname"
+                                v-if="formErrors.firstname"
                                 class="text-danger"
-                            >{{errors.firstname[0]}}</small>
+                            >{{formErrors.firstname[0]}}</small>
                         </div>
                     </div>
                     <div class="col">
@@ -28,9 +28,12 @@
                                 v-model="eachContact.lastname"
                                 name="lastname"
                                 placeholder="Last Name"
-                                v-bind:class="{'is-invalid': errors.lastname}"
+                                v-bind:class="{'is-invalid': formErrors.lastname}"
                             />
-                            <small v-if="errors.lastname" class="text-danger">{{errors.lastname[0]}}</small>
+                            <small
+                                v-if="formErrors.lastname"
+                                class="text-danger"
+                            >{{formErrors.lastname[0]}}</small>
                         </div>
                     </div>
                     <div class="col">
@@ -41,9 +44,12 @@
                                 v-model="eachContact.email"
                                 name="email"
                                 placeholder="Email"
-                                v-bind:class="{'is-invalid': errors.email}"
+                                v-bind:class="{'is-invalid': formErrors.email}"
                             />
-                            <small v-if="errors.email" class="text-danger">{{errors.email[0]}}</small>
+                            <small
+                                v-if="formErrors.email"
+                                class="text-danger"
+                            >{{formErrors.email[0]}}</small>
                         </div>
                     </div>
                 </div>
@@ -59,22 +65,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-// import ErrorMsg from "./ErrorMsg";
 export default {
     name: "AddContact",
-    // data() {
-    //     return {
-    //         eachContact: {}
-    //     };
-    // },
-    computed: mapGetters(["errors", "eachContact"]),
+    computed: mapGetters(["formErrors", "eachContact"]),
     methods: {
-        ...mapActions(["addContact", "resetForm"]),
+        ...mapActions(["addContact", "clearForm"]),
         onSubmit() {
             this.addContact(this.eachContact);
-        },
-        clearForm() {
-            this.resetForm();
         }
     }
 };

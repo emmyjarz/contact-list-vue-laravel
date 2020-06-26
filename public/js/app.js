@@ -2016,22 +2016,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
- // import ErrorMsg from "./ErrorMsg";
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddContact",
-  // data() {
-  //     return {
-  //         eachContact: {}
-  //     };
-  // },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["errors", "eachContact"]),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["addContact", "resetForm"])), {}, {
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["formErrors", "eachContact"]),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["addContact", "clearForm"])), {}, {
     onSubmit: function onSubmit() {
       this.addContact(this.eachContact);
-    },
-    clearForm: function clearForm() {
-      this.resetForm();
     }
   })
 });
@@ -2111,11 +2108,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Contacts",
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["fetchContacts"])),
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["allContacts", "pagination"]),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["fetchContacts", "deleteContact"])), {}, {
+    removeContact: function removeContact(contactId) {
+      var _this = this;
+
+      this.$swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(function (result) {
+        if (result.value) {
+          _this.deleteContact(contactId);
+        }
+      });
+    }
+  }),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["allContacts", "pagination", "systemErrors"]),
+  watch: {
+    systemErrors: function systemErrors(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.$swal.fire({
+          position: "top-end",
+          icon: "error",
+          width: "300px",
+          title: this.systemErrors,
+          showConfirmButton: true
+        });
+      }
+    }
+  },
   created: function created() {
     this.fetchContacts();
   }
@@ -42316,7 +42345,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  class: { "is-invalid": _vm.errors.firstname },
+                  class: { "is-invalid": _vm.formErrors.firstname },
                   attrs: {
                     type: "text",
                     name: "firstname",
@@ -42337,9 +42366,9 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.firstname
+                _vm.formErrors.firstname
                   ? _c("small", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.firstname[0]))
+                      _vm._v(_vm._s(_vm.formErrors.firstname[0]))
                     ])
                   : _vm._e()
               ])
@@ -42357,7 +42386,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  class: { "is-invalid": _vm.errors.lastname },
+                  class: { "is-invalid": _vm.formErrors.lastname },
                   attrs: {
                     type: "text",
                     name: "lastname",
@@ -42374,9 +42403,9 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.lastname
+                _vm.formErrors.lastname
                   ? _c("small", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.lastname[0]))
+                      _vm._v(_vm._s(_vm.formErrors.lastname[0]))
                     ])
                   : _vm._e()
               ])
@@ -42394,7 +42423,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  class: { "is-invalid": _vm.errors.email },
+                  class: { "is-invalid": _vm.formErrors.email },
                   attrs: { type: "text", name: "email", placeholder: "Email" },
                   domProps: { value: _vm.eachContact.email },
                   on: {
@@ -42407,9 +42436,9 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.email
+                _vm.formErrors.email
                   ? _c("small", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0]))
+                      _vm._v(_vm._s(_vm.formErrors.email[0]))
                     ])
                   : _vm._e()
               ])
@@ -42461,51 +42490,60 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
-      _c("table", { staticClass: "table table-hover" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.allContacts, function(contact) {
-            return _c("tr", { key: contact.id }, [
-              _vm._m(1, true),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(contact.firstname) + " " + _vm._s(contact.lastname)
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(contact.email))]),
-              _vm._v(" "),
-              _c("td", [
-                contact.phone
-                  ? _c("span", [
-                      _vm._v(
-                        "(" +
-                          _vm._s(contact.phone.slice(0, 3)) +
-                          ") " +
-                          _vm._s(contact.phone.slice(3, 6)) +
-                          "-" +
-                          _vm._s(contact.phone.slice(6, 10))
-                      )
-                    ])
-                  : _c("span", [_vm._v("N/A")])
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                contact.birthday
-                  ? _c("span", [_vm._v(_vm._s(contact.birthday))])
-                  : _c("span", [_vm._v("N/A")])
-              ]),
-              _vm._v(" "),
-              _vm._m(2, true)
+    _c("table", { staticClass: "table table-hover" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.allContacts, function(contact) {
+          return _c("tr", { key: contact.id }, [
+            _vm._m(1, true),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(_vm._s(contact.firstname) + " " + _vm._s(contact.lastname))
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(contact.email))]),
+            _vm._v(" "),
+            _c("td", [
+              contact.phone
+                ? _c("span", [
+                    _vm._v(
+                      "(" +
+                        _vm._s(contact.phone.slice(0, 3)) +
+                        ") " +
+                        _vm._s(contact.phone.slice(3, 6)) +
+                        "-" +
+                        _vm._s(contact.phone.slice(6, 10))
+                    )
+                  ])
+                : _c("span", [_vm._v("N/A")])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              contact.birthday
+                ? _c("span", [_vm._v(_vm._s(contact.birthday))])
+                : _c("span", [_vm._v("N/A")])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger btn-sm",
+                  on: {
+                    click: function($event) {
+                      return _vm.removeContact(contact.id)
+                    }
+                  }
+                },
+                [_vm._v("DELETE")]
+              )
             ])
-          }),
-          0
-        )
-      ])
+          ])
+        }),
+        0
+      )
     ]),
     _vm._v(" "),
     _c(
@@ -42588,14 +42626,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", [
       _c("button", { staticClass: "btn btn-success btn-sm" }, [_vm._v("EDIT")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-danger btn-sm" }, [_vm._v("DELETE")])
     ])
   }
 ]
@@ -56283,7 +56313,8 @@ var state = {
   contacts: [],
   pagination: {},
   eachContact: {},
-  errors: {}
+  formErrors: {},
+  systemErrors: ""
 };
 var getters = {
   allContacts: function allContacts(state) {
@@ -56295,8 +56326,11 @@ var getters = {
   eachContact: function eachContact(state) {
     return state.eachContact;
   },
-  errors: function errors(state) {
-    return state.errors;
+  formErrors: function formErrors(state) {
+    return state.formErrors;
+  },
+  systemErrors: function systemErrors(state) {
+    return state.systemErrors;
   }
 };
 var actions = {
@@ -56308,20 +56342,28 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
+              _context.prev = 1;
               pageUrl = pageUrl || "api/contacts";
-              _context.next = 4;
+              _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(pageUrl);
 
-            case 4:
+            case 5:
               response = _context.sent;
               commit("setContacts", response.data);
+              _context.next = 12;
+              break;
 
-            case 6:
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](1);
+              commit("setSystemErrors", _context.t0);
+
+            case 12:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[1, 9]]);
     }))();
   },
   addContact: function addContact(_ref2, contact) {
@@ -56332,30 +56374,76 @@ var actions = {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
-              _context2.next = 3;
+              _context2.prev = 1;
+              _context2.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/contacts", contact);
 
-            case 3:
+            case 4:
               response = _context2.sent;
 
               if (response.data.status !== "success") {
-                commit("setErrors", response.data.error);
+                commit("setFormErrors", response.data.error);
               } else {
                 commit("newContact", contact);
                 commit("clearForm");
               }
 
-            case 5:
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](1);
+              commit("setSystemErrors", _context2.t0);
+
+            case 11:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2);
+      }, _callee2, null, [[1, 8]]);
     }))();
   },
-  resetForm: function resetForm(_ref3) {
-    var commit = _ref3.commit;
-    commit("clearForm");
+  deleteContact: function deleteContact(_ref3, contactId) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.prev = 1;
+              _context3.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/contacts/".concat(contactId));
+
+            case 4:
+              response = _context3.sent;
+
+              if (response.data.status !== "success") {
+                commit("setSystemErrors", response.data.error);
+              } else {
+                commit("setDeleteContact", contactId);
+              }
+
+              _context3.next = 11;
+              break;
+
+            case 8:
+              _context3.prev = 8;
+              _context3.t0 = _context3["catch"](1);
+              commit("setSystemErrors", _context3.t0.message);
+
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[1, 8]]);
+    }))();
+  },
+  clearForm: function clearForm(_ref4) {
+    var commit = _ref4.commit;
+    commit("setClearForm");
   }
 };
 var mutations = {
@@ -56369,15 +56457,23 @@ var mutations = {
     state.pagination = pages;
     state.contacts = contacts.data;
   },
-  setErrors: function setErrors(state, errors) {
-    state.errors = errors;
-  },
   newContact: function newContact(state, contact) {
-    state.contacts.unshift(contact);
+    return state.contacts.unshift(contact);
   },
-  clearForm: function clearForm(state) {
+  setDeleteContact: function setDeleteContact(state, contactId) {
+    state.contacts = state.contacts.filter(function (contact) {
+      return contactId !== contact.id;
+    });
+  },
+  setFormErrors: function setFormErrors(state, errors) {
+    return state.formErrors = errors;
+  },
+  setSystemErrors: function setSystemErrors(state, errors) {
+    return state.systemErrors = errors;
+  },
+  setClearForm: function setClearForm(state) {
     state.eachContact = {};
-    state.errors = {};
+    state.formErrors = {};
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
