@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -26,13 +26,15 @@ Vue.use(VueSweetalert2);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('card', require('./components/layout/Card.vue').default);
-Vue.component('app', require('./App.vue').default);
+Vue.component("app", require("./App.vue").default);
+import store from "./store";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-new Vue({  
-    el: '#app',
+new Vue({
+    el: "#app",
+    store
 });
