@@ -1,18 +1,16 @@
 <template>
     <div>
-        <AddContact />
-        <Contacts />
+        <SystemError />
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import Contacts from "./components/Contacts";
-import AddContact from "./components/AddContact";
+import SystemError from "./components/SystemError";
 export default {
     name: "App",
     components: {
-        Contacts,
-        AddContact
+        SystemError
     }
 };
 </script>

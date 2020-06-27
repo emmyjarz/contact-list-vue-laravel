@@ -2,7 +2,7 @@
     <div class="card bg-light mb-3">
         <div class="card-body">
             <h3 class="mb-3 font-weight-bold">Contact</h3>
-            <form @submit.prevent="onSubmit">
+            <form @submit.prevent="addContact(eachContact)">
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
@@ -68,12 +68,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
     name: "AddContact",
     computed: mapGetters(["formErrors", "eachContact"]),
-    methods: {
-        ...mapActions(["addContact", "clearForm"]),
-        onSubmit() {
-            this.addContact(this.eachContact);
-        }
-    }
+    methods: mapActions(["addContact", "clearForm"])
 };
 </script>
 

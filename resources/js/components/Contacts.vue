@@ -12,7 +12,9 @@
             <tbody>
                 <tr v-bind:key="contact.id" v-for="contact in allContacts">
                     <td>
-                        <button class="btn btn-success btn-sm">EDIT</button>
+                        <router-link v-bind:to="'contacts/' + contact.id">
+                            <button class="btn btn-success btn-sm">EDIT</button>
+                        </router-link>
                     </td>
                     <td>{{contact.firstname}} {{contact.lastname}}</td>
                     <td>{{contact.email}}</td>
@@ -82,19 +84,19 @@ export default {
         }
     },
     computed: mapGetters(["allContacts", "pagination", "systemErrors"]),
-    watch: {
-        systemErrors(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                this.$swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    width: "300px",
-                    title: this.systemErrors,
-                    showConfirmButton: true
-                });
-            }
-        }
-    },
+    // watch: {
+    //     systemErrors(newValue, oldValue) {
+    //         if (newValue !== oldValue) {
+    //             this.$swal.fire({
+    //                 position: "top-end",
+    //                 icon: "error",
+    //                 width: "300px",
+    //                 title: this.systemErrors,
+    //                 showConfirmButton: true
+    //             });
+    //         }
+    //     }
+    // },
     created() {
         this.fetchContacts();
     }

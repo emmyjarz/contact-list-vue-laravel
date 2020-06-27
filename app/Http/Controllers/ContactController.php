@@ -66,7 +66,8 @@ class ContactController extends Controller
         }
 
         return [
-            'status' => 'success'
+            'status' => 'success',
+            'data' => $contact
         ];
     }
     /**
