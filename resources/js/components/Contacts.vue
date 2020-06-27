@@ -84,19 +84,6 @@ export default {
         }
     },
     computed: mapGetters(["allContacts", "pagination", "systemErrors"]),
-    // watch: {
-    //     systemErrors(newValue, oldValue) {
-    //         if (newValue !== oldValue) {
-    //             this.$swal.fire({
-    //                 position: "top-end",
-    //                 icon: "error",
-    //                 width: "300px",
-    //                 title: this.systemErrors,
-    //                 showConfirmButton: true
-    //             });
-    //         }
-    //     }
-    // },
     created() {
         this.fetchContacts();
     }
